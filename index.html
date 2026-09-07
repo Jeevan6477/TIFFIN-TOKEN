@@ -16,66 +16,68 @@
     }
 
     body { 
-      background: #180505;
+      background: #140303;
       color: #f3f4f6;
       padding: 12px; 
-      padding-bottom: 150px; 
+      padding-bottom: 140px; 
       min-height: 100vh;
     }
 
+    /* Top Bar */
     header { 
       background: #991b1b;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 14px; 
-      padding: 14px 18px; 
-      margin-bottom: 12px; 
+      padding: 12px 16px; 
+      margin-bottom: 10px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
     }
-    header h1 { font-size: 1.35rem; font-weight: 800; color: #fff; }
+    header h1 { font-size: 1.25rem; font-weight: 800; color: #ffffff; }
     .token-badge { 
       background: #ffffff;
       color: #991b1b; 
       padding: 6px 14px; 
-      border-radius: 30px; 
+      border-radius: 20px; 
       font-weight: 900; 
-      font-size: 1rem; 
+      font-size: 0.95rem; 
     }
 
+    /* Status Bar */
     .status-strip {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
+      padding: 7px 12px;
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
       font-weight: 700;
       color: #e5e7eb;
       cursor: pointer;
     }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    .nav-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    /* Nav Buttons */
+    .nav-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
     .nav-tabs button { 
       flex: 1; 
-      padding: 12px 4px; 
-      border-radius: 12px; 
+      padding: 10px 4px; 
+      border-radius: 10px; 
       font-weight: 700; 
-      font-size: 0.95rem; 
+      font-size: 0.9rem; 
       cursor: pointer; 
       background: rgba(255, 255, 255, 0.08); 
       color: #d1d5db; 
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
     .nav-tabs button.active { 
       background: #dc2626;
@@ -83,16 +85,15 @@
       border: 1px solid rgba(255, 255, 255, 0.35);
     }
 
-    /* Menu Grid */
+    /* 6 Food Cards (Direct Hardcoded HTML) */
     .menu-grid { 
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
-      gap: 12px; 
-      margin-bottom: 16px; 
+      gap: 10px; 
     }
     .card { 
       background: rgba(255, 255, 255, 0.08);
-      border-radius: 16px; 
+      border-radius: 14px; 
       overflow: hidden; 
       border: 1px solid rgba(255, 255, 255, 0.15); 
       display: flex; 
@@ -100,58 +101,54 @@
     }
     .card-img { 
       width: 100%; 
-      height: 100px; 
+      height: 95px; 
       object-fit: cover; 
       background: #2b0b0b;
     }
     .card-body { 
-      padding: 12px 8px; 
+      padding: 10px 6px; 
       text-align: center; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: space-between; 
-      flex: 1; 
     }
-    .card h4 { font-size: 1.1rem; font-weight: 800; color: #ffffff; margin-bottom: 4px; }
-    .card .price { color: #4ade80; font-weight: 800; font-size: 1.25rem; margin-bottom: 10px; }
+    .card h4 { font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-bottom: 2px; }
+    .card .price { color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 8px; }
     
-    .controls { display: flex; justify-content: center; align-items: center; gap: 12px; }
+    .controls { display: flex; justify-content: center; align-items: center; gap: 10px; }
     .btn-qty { 
-      width: 44px; 
-      height: 44px; 
+      width: 40px; 
+      height: 40px; 
       background: rgba(255, 255, 255, 0.25); 
       border: 1px solid rgba(255, 255, 255, 0.4); 
-      border-radius: 10px; 
+      border-radius: 8px; 
       color: #ffffff; 
       font-weight: 900; 
-      font-size: 1.5rem; 
+      font-size: 1.4rem; 
       cursor: pointer; 
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .btn-qty:active { background: rgba(255, 255, 255, 0.5); transform: scale(0.92); }
-    .qty-number { font-size: 1.35rem; font-weight: 900; min-width: 24px; color: #ffffff; }
+    .qty-number { font-size: 1.25rem; font-weight: 900; min-width: 22px; color: #ffffff; }
 
-    /* Bottom Actions Panel */
+    /* Fixed Checkout Footer */
     .checkout-panel { 
       position: fixed; 
       bottom: 0; left: 0; right: 0; 
-      background: #0f0303;
-      border-top: 1px solid rgba(255, 255, 255, 0.25); 
-      padding: 12px 16px; 
-      z-index: 10; 
+      background: #0a0101;
+      border-top: 1px solid rgba(255, 255, 255, 0.2); 
+      padding: 10px 14px; 
+      z-index: 50; 
     }
-    .total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: #ffffff; }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: #ffffff; }
     .total-row span:last-child { color: #4ade80; }
     
     .actions { display: flex; gap: 8px; }
     .btn-pay { 
       flex: 1; 
-      padding: 14px 4px; 
+      padding: 12px 2px; 
       border: none; 
-      border-radius: 12px; 
-      font-size: 0.95rem; 
+      border-radius: 10px; 
+      font-size: 0.9rem; 
       font-weight: 800; 
       color: white; 
       cursor: pointer; 
@@ -162,7 +159,7 @@
     .btn-cash { background: #16a34a; }
     .btn-upi { background: #2563eb; }
 
-    /* Monospaced Thermal Slip Modal */
+    /* Receipts Modal (Preview) */
     #token-modal { 
       display: none; 
       position: fixed; 
@@ -183,7 +180,6 @@
       font-family: "Courier New", Courier, monospace;
       font-size: 0.85rem;
       line-height: 1.35;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
       position: relative;
     }
     .receipt-paper::after {
@@ -205,32 +201,32 @@
     .receipt-col-qty { width: 30%; text-align: center; }
     .receipt-col-total { width: 26%; text-align: right; }
 
-    /* Sales Register */
-    .sales-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-    .metric { background: rgba(255, 255, 255, 0.08); padding: 12px 6px; border-radius: 12px; text-align: center; }
-    .metric span { display: block; font-size: 0.9rem; color: #9ca3af; margin-bottom: 4px; }
-    .metric strong { font-size: 1.25rem; color: #ffffff; font-weight: 900; }
-    .table-container { background: rgba(255, 255, 255, 0.06); border-radius: 14px; overflow: hidden; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    /* Daily Sales Table */
+    .sales-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .metric { background: rgba(255, 255, 255, 0.08); padding: 10px 4px; border-radius: 10px; text-align: center; }
+    .metric span { display: block; font-size: 0.85rem; color: #9ca3af; margin-bottom: 2px; }
+    .metric strong { font-size: 1.15rem; color: #ffffff; font-weight: 900; }
+    .table-container { background: rgba(255, 255, 255, 0.06); border-radius: 12px; overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 8px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
     th { background: rgba(255, 255, 255, 0.1); font-weight: 700; color: #e5e7eb; }
-    .btn-export { background: rgba(255,255,255,0.15); color: white; padding: 14px; border-radius: 12px; width: 100%; font-size: 1rem; font-weight: 800; margin-top: 12px; cursor: pointer; border: none; }
+    .btn-export { background: rgba(255,255,255,0.15); color: white; padding: 12px; border-radius: 10px; width: 100%; font-size: 0.95rem; font-weight: 800; margin-top: 12px; cursor: pointer; border: none; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1 id="display-shop-name">Sri Tiffin POS</h1>
+    <h1>Sri Tiffin POS</h1>
     <div class="token-badge">Next: #<span id="next-token-id">1</span></div>
   </header>
 
   <div class="status-strip">
-    <div class="status-pill" onclick="alert('POS is saving all tokens and sales directly into local device storage.')">
+    <div class="status-pill" onclick="alert('All records save to your phone storage.')">
       <span class="status-dot" style="background:#22c55e;"></span>
       <span>Storage: Active</span>
     </div>
     <div class="status-pill" onclick="connectPrinter()">
-      <span class="status-dot" id="printer-dot"></span>
+      <span class="status-dot" id="printer-dot" style="background:#9ca3af;"></span>
       <span id="printer-label">Printer: Connect</span>
     </div>
   </div>
@@ -240,23 +236,110 @@
     <button id="tab-sales" onclick="switchView('sales')">Daily Sales</button>
   </div>
 
-  <!-- 1. POS VIEW -->
+  <!-- 1. POS VIEW: Raw HTML Elements -->
   <div id="view-billing">
-    <div class="menu-grid" id="menu-container"></div>
+    <div class="menu-grid">
+      
+      <!-- Idli -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80" alt="Idli" />
+        <div class="card-body">
+          <h4>Idli (4)</h4>
+          <div class="price">₹40</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(1, -1)">-</button>
+            <span class="qty-number" id="qty-1">0</span>
+            <button class="btn-qty" onclick="changeQty(1, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wada -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400&auto=format&fit=crop&q=80" alt="Wada" />
+        <div class="card-body">
+          <h4>Wada (2)</h4>
+          <div class="price">₹45</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(2, -1)">-</button>
+            <span class="qty-number" id="qty-2">0</span>
+            <button class="btn-qty" onclick="changeQty(2, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Masala Dosa -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" alt="Masala Dosa" />
+        <div class="card-body">
+          <h4>Masala Dosa</h4>
+          <div class="price">₹55</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(3, -1)">-</button>
+            <span class="qty-number" id="qty-3">0</span>
+            <button class="btn-qty" onclick="changeQty(3, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plain Dosa -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" alt="Plain Dosa" />
+        <div class="card-body">
+          <h4>Plain Dosa</h4>
+          <div class="price">₹45</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(4, -1)">-</button>
+            <span class="qty-number" id="qty-4">0</span>
+            <button class="btn-qty" onclick="changeQty(4, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poori -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80" alt="Poori" />
+        <div class="card-body">
+          <h4>Poori (2)</h4>
+          <div class="price">₹50</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(5, -1)">-</button>
+            <span class="qty-number" id="qty-5">0</span>
+            <button class="btn-qty" onclick="changeQty(5, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Coffee -->
+      <div class="card">
+        <img class="card-img" src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80" alt="Filter Coffee" />
+        <div class="card-body">
+          <h4>Filter Coffee</h4>
+          <div class="price">₹20</div>
+          <div class="controls">
+            <button class="btn-qty" onclick="changeQty(6, -1)">-</button>
+            <span class="qty-number" id="qty-6">0</span>
+            <button class="btn-qty" onclick="changeQty(6, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Fixed Bottom Controls -->
     <div class="checkout-panel">
       <div class="total-row">
         <span>Total:</span>
         <span>₹<span id="pos-total">0</span></span>
       </div>
       <div class="actions">
-        <!-- Direct Print Preview Button -->
-        <button class="btn-pay btn-preview" type="button" onclick="previewCurrentBill()">
+        <button class="btn-pay btn-preview" onclick="previewCurrentBill()">
           👁️ Preview Bill
         </button>
-        <button class="btn-pay btn-cash" type="button" onclick="generateToken('Cash')">
+        <button class="btn-pay btn-cash" onclick="generateToken('Cash')">
           Cash Pay
         </button>
-        <button class="btn-pay btn-upi" type="button" onclick="generateToken('UPI')">
+        <button class="btn-pay btn-upi" onclick="generateToken('UPI')">
           UPI Pay
         </button>
       </div>
@@ -284,18 +367,15 @@
     <button class="btn-export" style="background: #b91c1c; margin-top:8px;" onclick="resetDay()">Reset Day Counter</button>
   </div>
 
-  <!-- THERMAL RECEIPT MODAL PREVIEW -->
+  <!-- RECEIPT MODAL -->
   <div id="token-modal" onclick="closeModal()">
-    <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 320px;" onclick="event.stopPropagation()">
-      <!-- Receipt Monospaced Content -->
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;" onclick="event.stopPropagation()">
       <div class="receipt-paper" id="receipt-preview-content"></div>
-
-      <!-- Actions inside modal -->
-      <div style="display: flex; gap: 10px; margin-top: 10px;">
-        <button class="btn-pay btn-cash" style="padding: 12px; font-size: 1rem;" onclick="reprintCurrentToken()">
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button class="btn-pay btn-cash" style="padding: 12px;" onclick="reprintCurrentToken()">
           🖨️ Print Slip
         </button>
-        <button class="btn-pay" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 12px; font-size: 1rem;" onclick="closeModal()">
+        <button class="btn-pay" style="background: rgba(255,255,255,0.2); padding: 12px;" onclick="closeModal()">
           Close
         </button>
       </div>
@@ -303,119 +383,95 @@
   </div>
 
   <script>
-    const DEFAULT_ITEMS = [
-      { id: 1, name: "Idli (4)", price: 40, image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80" },
-      { id: 2, name: "Wada (2)", price: 45, image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400&auto=format&fit=crop&q=80" },
-      { id: 3, name: "Masala Dosa", price: 55, image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" },
-      { id: 4, name: "Plain Dosa", price: 45, image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" },
-      { id: 5, name: "Poori (2)", price: 50, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80" },
-      { id: 6, name: "Filter Coffee", price: 20, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80" }
-    ];
+    const ITEMS = {
+      1: { name: "Idli (4)", price: 40 },
+      2: { name: "Wada (2)", price: 45 },
+      3: { name: "Masala Dosa", price: 55 },
+      4: { name: "Plain Dosa", price: 45 },
+      5: { name: "Poori (2)", price: 50 },
+      6: { name: "Filter Coffee", price: 20 }
+    };
 
-    let shopName = "Sri Tiffin POS";
-    let menu = DEFAULT_ITEMS;
-    let localSales = [];
-    let currentToken = 1;
-    let cart = {};
+    let cart = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
+    let currentToken = parseInt(localStorage.getItem("pos_token") || "1", 10);
+    let localSales = JSON.parse(localStorage.getItem("pos_sales") || "[]");
     let printCharacteristic = null;
     let activeSlipRecord = null;
     let activeSlipItems = null;
 
-    try {
-      shopName = localStorage.getItem("pos_shop_name") || "Sri Tiffin POS";
-      const savedSales = localStorage.getItem("pos_sales");
-      if (savedSales) localSales = JSON.parse(savedSales);
-      currentToken = parseInt(localStorage.getItem("pos_token") || "1", 10);
-    } catch (e) {
-      localStorage.clear();
-      currentToken = 1;
-    }
-
-    document.getElementById("display-shop-name").innerText = shopName;
     document.getElementById("next-token-id").innerText = currentToken;
-
-    function renderPOSGrid() {
-      const grid = document.getElementById("menu-container");
-      grid.innerHTML = "";
-      menu.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <img class="card-img" src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/400x300?text=Tiffin'" />
-          <div class="card-body">
-            <h4>${item.name}</h4>
-            <div class="price">₹${item.price}</div>
-            <div class="controls">
-              <button class="btn-qty" type="button" onclick="changeQty(${item.id}, -1)">-</button>
-              <span class="qty-number" id="qty-${item.id}">${cart[item.id] || 0}</span>
-              <button class="btn-qty" type="button" onclick="changeQty(${item.id}, 1)">+</button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(div);
-      });
-    }
 
     function changeQty(id, delta) {
       cart[id] = Math.max(0, (cart[id] || 0) + delta);
-      const el = document.getElementById(`qty-${id}`);
-      if (el) el.innerText = cart[id];
+      document.getElementById("qty-" + id).innerText = cart[id];
       
       let total = 0;
-      for (let itemId in cart) {
-        const item = menu.find(m => m.id == itemId);
-        if (item) total += cart[itemId] * item.price;
+      for (let i in cart) {
+        total += cart[i] * ITEMS[i].price;
       }
       document.getElementById("pos-total").innerText = total;
     }
 
-    // Explicit "Preview Bill" Action
     function previewCurrentBill() {
-      const selected = menu.filter(m => (cart[m.id] || 0) > 0);
+      let selected = [];
+      let total = 0;
+      for (let i in cart) {
+        if (cart[i] > 0) {
+          selected.push({
+            name: ITEMS[i].name,
+            qty: cart[i],
+            price: ITEMS[i].price,
+            subTotal: cart[i] * ITEMS[i].price
+          });
+          total += cart[i] * ITEMS[i].price;
+        }
+      }
+
       if (!selected.length) {
-        alert("Please add at least one item to preview the bill!");
+        alert("Please add at least 1 item first!");
         return;
       }
 
-      const total = parseInt(document.getElementById("pos-total").innerText, 10);
-      const todayFormatted = new Date().toLocaleDateString('en-GB');
-
       activeSlipRecord = {
         token: currentToken,
-        date: todayFormatted,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        mode: "Estimate / Pending",
+        date: new Date().toLocaleDateString('en-GB'),
+        mode: "Estimate / Preview",
         total: total
       };
-
-      activeSlipItems = selected.map(m => ({
-        name: m.name,
-        qty: cart[m.id],
-        price: m.price,
-        subTotal: m.price * cart[m.id]
-      }));
+      activeSlipItems = selected;
 
       renderReceiptPreview(activeSlipRecord, activeSlipItems);
       document.getElementById("token-modal").style.display = "flex";
     }
 
-    // Bill Generation & Auto Print
     function generateToken(mode) {
-      const selected = menu.filter(m => (cart[m.id] || 0) > 0);
+      let selected = [];
+      let total = 0;
+      let summaryList = [];
+
+      for (let i in cart) {
+        if (cart[i] > 0) {
+          selected.push({
+            name: ITEMS[i].name,
+            qty: cart[i],
+            price: ITEMS[i].price,
+            subTotal: cart[i] * ITEMS[i].price
+          });
+          summaryList.push(ITEMS[i].name + " x" + cart[i]);
+          total += cart[i] * ITEMS[i].price;
+        }
+      }
+
       if (!selected.length) {
-        alert("Please add at least one item!");
+        alert("Please add at least 1 item!");
         return;
       }
 
-      const total = parseInt(document.getElementById("pos-total").innerText, 10);
-      const itemsPurchased = selected.map(m => `${m.name} x${cart[m.id]}`);
-      const todayFormatted = new Date().toLocaleDateString('en-GB');
-
       const record = {
         token: currentToken,
-        date: todayFormatted,
+        date: new Date().toLocaleDateString('en-GB'),
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        items: itemsPurchased.join(", "),
+        items: summaryList.join(", "),
         total: total,
         mode: mode
       };
@@ -424,40 +480,31 @@
       localStorage.setItem("pos_sales", JSON.stringify(localSales));
 
       activeSlipRecord = record;
-      activeSlipItems = selected.map(m => ({
-        name: m.name,
-        qty: cart[m.id],
-        price: m.price,
-        subTotal: m.price * cart[m.id]
-      }));
+      activeSlipItems = selected;
 
-      // Render & Show Thermal Slip Preview
-      renderReceiptPreview(record, activeSlipItems);
+      renderReceiptPreview(record, selected);
       document.getElementById("token-modal").style.display = "flex";
 
-      // Auto-print if paired
       if (printCharacteristic) {
-        printThermalSlip(record, activeSlipItems);
+        printThermalSlip(record, selected);
       }
 
       currentToken++;
       localStorage.setItem("pos_token", currentToken);
       document.getElementById("next-token-id").innerText = currentToken;
 
-      // Reset Cart
-      cart = {};
-      menu.forEach(m => {
-        const el = document.getElementById(`qty-${m.id}`);
-        if (el) el.innerText = "0";
-      });
+      // Reset
+      for (let i in cart) {
+        cart[i] = 0;
+        document.getElementById("qty-" + i).innerText = "0";
+      }
       document.getElementById("pos-total").innerText = "0";
     }
 
-    // Construct Exact Monospaced Slip
     function renderReceiptPreview(record, items) {
-      const totalQty = items.reduce((sum, item) => sum + item.qty, 0);
+      let totalQty = items.reduce((sum, item) => sum + item.qty, 0);
 
-      const itemsHtml = items.map(item => `
+      let itemsHtml = items.map(item => `
         <div class="receipt-row">
           <span class="receipt-col-name">${item.name}</span>
           <span class="receipt-col-qty">${item.qty}/${item.price.toFixed(2)}</span>
@@ -466,7 +513,7 @@
       `).join('');
 
       document.getElementById("receipt-preview-content").innerHTML = `
-        <div class="receipt-center receipt-bold" style="font-size: 1.15rem;">${shopName}</div>
+        <div class="receipt-center receipt-bold" style="font-size: 1.15rem;">Sri Tiffin POS</div>
         <div class="receipt-center" style="font-size: 0.75rem; color: #4b5563;">Main Road, Near Bus Stand</div>
         <div class="receipt-center" style="font-size: 0.75rem; color: #4b5563;">Phone: 9876543210</div>
         
@@ -508,16 +555,12 @@
         <div class="receipt-center" style="font-size: 0.78rem; margin-top: 4px;">
           Thank you for ordering!<br>Please visit again.
         </div>
-        <div class="receipt-center" style="font-size: 0.7rem; color: #6b7280; margin-top: 4px;">
-          Powered by ${shopName}
-        </div>
       `;
     }
 
-    // Manual Print Trigger from Modal
     async function reprintCurrentToken() {
       if (!printCharacteristic) {
-        alert("Bluetooth printer not connected! Tap 'Printer: Connect' at the top first.");
+        alert("Bluetooth printer not connected! Tap 'Printer: Connect' first.");
         return;
       }
       if (activeSlipRecord && activeSlipItems) {
@@ -532,10 +575,8 @@
     function switchView(tab) {
       document.getElementById("view-billing").style.display = tab === 'billing' ? 'block' : 'none';
       document.getElementById("view-sales").style.display = tab === 'sales' ? 'block' : 'none';
-
       document.getElementById("tab-billing").className = tab === 'billing' ? 'active' : '';
       document.getElementById("tab-sales").className = tab === 'sales' ? 'active' : '';
-
       if (tab === 'sales') renderSalesTable();
     }
 
@@ -550,5 +591,140 @@
 
       rows.innerHTML = localSales.slice().reverse().map(s => `
         <tr>
-          <td><strong>#${s.token}</strong><br><small style="color:#9ca3af;">${s.time}</small></td>
+          <td><strong>#${s.token}</strong><br><small style="color:#9ca3af;">${s.time || ''}</small></td>
           <td>${s.items}</td>
+          <td><span style="color:${s.mode === 'UPI' ? '#60a5fa' : '#4ade80'}; font-weight: bold;">${s.mode}</span></td>
+          <td><strong>₹${s.total}</strong></td>
+        </tr>
+      `).join('');
+    }
+
+    function exportToCSV() {
+      if (!localSales.length) return alert("No sales recorded yet.");
+      let csv = "Token,Date,Time,Items,Payment Mode,Total Amount\n";
+      localSales.forEach(s => {
+        csv += `"${s.token}","${s.date}","${s.time || ''}","${s.items}","${s.mode}","${s.total}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `sales_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    }
+
+    function resetDay() {
+      if (confirm("Reset token counter to #1 for the new day? Make sure you downloaded CSV first.")) {
+        localSales = [];
+        currentToken = 1;
+        localStorage.removeItem("pos_sales");
+        localStorage.setItem("pos_token", "1");
+        document.getElementById("next-token-id").innerText = "1";
+        renderSalesTable();
+      }
+    }
+
+    async function connectPrinter() {
+      if (!navigator.bluetooth) return alert("Web Bluetooth requires Chrome on Android.");
+      try {
+        const device = await navigator.bluetooth.requestDevice({
+          acceptAllDevices: true,
+          optionalServices: [
+            "000018f0-0000-1000-8000-00805f9b34fb",
+            "e7810a71-73ae-499d-8c15-faa9aef0c3f2",
+            "49535343-fe7d-4ae5-8fa9-9fafd205e455"
+          ]
+        });
+
+        const server = await device.gatt.connect();
+        const services = await server.getPrimaryServices();
+        
+        for (const service of services) {
+          const characteristics = await service.getCharacteristics();
+          for (const char of characteristics) {
+            if (char.properties.write || char.properties.writeWithoutResponse) {
+              printCharacteristic = char;
+              break;
+            }
+          }
+          if (printCharacteristic) break;
+        }
+
+        if (printCharacteristic) {
+          document.getElementById("printer-dot").style.background = "#22c55e";
+          document.getElementById("printer-label").innerText = `Printer: Connected`;
+          alert("Printer Connected!");
+        }
+      } catch (err) {
+        alert("Printer error: " + err.message);
+      }
+    }
+
+    async function printThermalSlip(record, items) {
+      try {
+        const encoder = new TextEncoder();
+        const ESC = "\x1B";
+        const GS = "\x1D";
+
+        let receipt = ESC + "@"; 
+        receipt += ESC + "a" + "\x01"; 
+        receipt += ESC + "E" + "\x01"; 
+        receipt += "Sri Tiffin POS\n";
+        receipt += ESC + "E" + "\x00"; 
+        receipt += "Main Road, Near Bus Stand\n";
+        receipt += "Phone: 9876543210\n";
+        receipt += "--------------------------------\n";
+
+        receipt += ESC + "a" + "\x00"; 
+        receipt += `Bill To: ${record.mode}\n`;
+        const billLeft = `Bill No: ${record.token}`;
+        const billRight = `Date: ${record.date}`;
+        const billSpaces = Math.max(1, 32 - (billLeft.length + billRight.length));
+        receipt += billLeft + " ".repeat(billSpaces) + billRight + "\n";
+        receipt += "--------------------------------\n";
+
+        receipt += "Item Name       Qty/Rate   Total\n";
+        receipt += "--------------------------------\n";
+
+        let totalQty = 0;
+        items.forEach(item => {
+          totalQty += item.qty;
+          const lineTotal = item.subTotal.toFixed(2);
+          const qtyRate = `${item.qty}/${item.price.toFixed(2)}`;
+
+          let name = item.name;
+          if (name.length > 14) name = name.substring(0, 14);
+          else name = name.padEnd(14, " ");
+
+          const col2 = qtyRate.padEnd(10, " ");
+          const col3 = lineTotal.padStart(8, " ");
+          receipt += name + col2 + col3 + "\n";
+        });
+
+        receipt += "--------------------------------\n";
+
+        const leftSum = `Total Qty: ${totalQty}`;
+        const rightSum = `Sub Total: ${record.total.toFixed(2)}`;
+        const sumSpaces = Math.max(1, 32 - (leftSum.length + rightSum.length));
+        receipt += leftSum + " ".repeat(sumSpaces) + rightSum + "\n";
+        receipt += "--------------------------------\n";
+
+        receipt += ESC + "a" + "\x01"; 
+        receipt += ESC + "E" + "\x01"; 
+        receipt += `Grand Total ${record.total.toFixed(2)}\n`;
+        receipt += ESC + "E" + "\x00"; 
+        receipt += "--------------------------------\n";
+
+        receipt += "Thank you for ordering!\n";
+        receipt += "Please visit again.\n\n\n\n";
+
+        receipt += GS + "V" + "\x41" + "\x00";
+
+        const data = encoder.encode(receipt);
+        await printCharacteristic.writeValue(data);
+      } catch (err) {
+        console.error("Print error:", err);
+      }
+    }
+  </script>
+</body>
+</html>
