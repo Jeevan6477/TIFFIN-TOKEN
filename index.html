@@ -5,564 +5,256 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Sri Tiffin Center</title>
   <meta name="theme-color" content="#991b1b" />
-
   <style>
-    * { 
-      box-sizing: border-box; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      margin: 0; 
-      padding: 0; 
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body { 
-      background: #140303;
-      color: #f3f4f6;
-      padding: 12px; 
-      padding-bottom: 150px; 
-      min-height: 100vh;
-    }
-
-    header { 
-      background: #991b1b;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 14px; 
-      padding: 12px 16px; 
-      margin-bottom: 10px; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-    }
-    header h1 { font-size: 1.25rem; font-weight: 800; color: #ffffff; }
-    .token-badge { 
-      background: #ffffff;
-      color: #991b1b; 
-      padding: 6px 14px; 
-      border-radius: 20px; 
-      font-weight: 900; 
-      font-size: 0.95rem; 
-    }
-
-    .status-strip {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 12px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #e5e7eb;
-      cursor: pointer;
-    }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; }
-
+    * { box-sizing: border-box; font-family: sans-serif; margin: 0; padding: 0; }
+    body { background: #140303; color: #fff; padding: 12px; padding-bottom: 140px; min-height: 100vh; }
+    header { background: #991b1b; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .token-badge { background: #fff; color: #991b1b; padding: 6px 12px; border-radius: 20px; font-weight: bold; }
     .nav-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
-    .nav-tabs button { 
-      flex: 1; 
-      padding: 10px 4px; 
-      border-radius: 10px; 
-      font-weight: 700; 
-      font-size: 0.9rem; 
-      cursor: pointer; 
-      background: rgba(255, 255, 255, 0.08); 
-      color: #d1d5db; 
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-    .nav-tabs button.active { 
-      background: #dc2626;
-      color: #ffffff; 
-      border: 1px solid rgba(255, 255, 255, 0.35);
-    }
-
-    /* Fixed Food Grid */
-    .menu-grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 10px; 
-    }
-    .card { 
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 14px; 
-      overflow: hidden; 
-      border: 1px solid rgba(255, 255, 255, 0.15); 
-      display: flex; 
-      flex-direction: column; 
-    }
-    .card-img { 
-      width: 100%; 
-      height: 95px; 
-      object-fit: cover; 
-      background: #2b0b0b;
-    }
-    .card-body { 
-      padding: 10px 6px; 
-      text-align: center; 
-    }
-    .card h4 { font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-bottom: 2px; }
-    .card .price { color: #4ade80; font-weight: 800; font-size: 1.15rem; margin-bottom: 8px; }
-    
+    .nav-tabs button { flex: 1; padding: 10px; border-radius: 8px; font-weight: bold; background: #333; color: #fff; border: none; }
+    .nav-tabs button.active { background: #dc2626; }
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .card { background: #222; border-radius: 12px; overflow: hidden; padding-bottom: 8px; text-align: center; border: 1px solid #444; }
+    .card img { width: 100%; height: 95px; object-fit: cover; background: #333; }
+    .card h4 { margin: 6px 0 2px; font-size: 1rem; }
+    .card .price { color: #4ade80; font-weight: bold; margin-bottom: 8px; }
     .controls { display: flex; justify-content: center; align-items: center; gap: 10px; }
-    .btn-qty { 
-      width: 40px; 
-      height: 40px; 
-      background: rgba(255, 255, 255, 0.25); 
-      border: 1px solid rgba(255, 255, 255, 0.4); 
-      border-radius: 8px; 
-      color: #ffffff; 
-      font-weight: 900; 
-      font-size: 1.4rem; 
-      cursor: pointer; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn-qty:active { background: rgba(255, 255, 255, 0.5); transform: scale(0.92); }
-    .qty-number { font-size: 1.25rem; font-weight: 900; min-width: 22px; color: #ffffff; }
-
-    /* Bottom Bar */
-    .checkout-panel { 
-      position: fixed; 
-      bottom: 0; left: 0; right: 0; 
-      background: #0a0101;
-      border-top: 1px solid rgba(255, 255, 255, 0.2); 
-      padding: 10px 14px; 
-      z-index: 50; 
-    }
-    .total-row { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: #ffffff; }
-    .total-row span:last-child { color: #4ade80; }
-    
+    .btn-qty { width: 38px; height: 38px; background: #444; border: 1px solid #666; border-radius: 6px; color: #fff; font-size: 1.3rem; font-weight: bold; }
+    .qty-num { font-size: 1.2rem; font-weight: bold; min-width: 20px; }
+    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #000; padding: 12px 16px; border-top: 1px solid #333; z-index: 50; }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
     .actions { display: flex; gap: 8px; }
-    .btn-pay { 
-      flex: 1; 
-      padding: 12px 2px; 
-      border: none; 
-      border-radius: 10px; 
-      font-size: 0.9rem; 
-      font-weight: 800; 
-      color: white; 
-      cursor: pointer; 
-      text-align: center;
-    }
-    .btn-pay:active { transform: scale(0.96); }
-    .btn-preview { background: #475569; }
+    .btn-pay { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #fff; }
+    .btn-prev { background: #475569; }
     .btn-cash { background: #16a34a; }
     .btn-upi { background: #2563eb; }
-
-    /* Manage Menu & Settings */
-    .section-card { 
-      background: rgba(255, 255, 255, 0.08); 
-      border-radius: 14px; 
-      padding: 16px; 
-      border: 1px solid rgba(255, 255, 255, 0.15); 
-      margin-bottom: 14px; 
-    }
-    .section-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #ffffff; }
-    .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
-    .form-group label { font-size: 0.85rem; color: #d1d5db; font-weight: 600; }
-    .form-group input { padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; font-size: 1rem; background: rgba(0,0,0,0.4); color: white; }
-    .btn-action { background: #dc2626; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
-
-    /* Thermal Receipt Modal Preview */
-    #token-modal { 
-      display: none; 
-      position: fixed; 
-      inset: 0; 
-      background: rgba(0,0,0,0.85); 
-      align-items: center; 
-      justify-content: center; 
-      padding: 16px; 
-      z-index: 999; 
-    }
-    .receipt-paper { 
-      background: #fafafa; 
-      color: #111827; 
-      width: 100%; 
-      max-width: 320px; 
-      padding: 20px 16px; 
-      border-radius: 4px; 
-      font-family: "Courier New", Courier, monospace;
-      font-size: 0.85rem;
-      line-height: 1.35;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-    }
-    .receipt-paper::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 0; right: 0;
-      height: 10px;
-      background: linear-gradient(135deg, transparent 5px, #fafafa 5px) 0 0,
-                  linear-gradient(-135deg, transparent 5px, #fafafa 5px) 0 0;
-      background-size: 10px 10px;
-      background-repeat: repeat-x;
-    }
+    .section-card { background: #222; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group input { padding: 10px; border-radius: 6px; border: 1px solid #555; background: #111; color: #fff; }
+    .btn-save { background: #dc2626; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; }
+    #token-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 16px; z-index: 999; }
+    .receipt-paper { background: #fff; color: #111; width: 100%; max-width: 300px; padding: 16px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; line-height: 1.3; }
+    .receipt-paper::after { content: ""; display: block; margin-top: 10px; border-bottom: 2px dashed #999; }
     .receipt-center { text-align: center; }
-    .receipt-bold { font-weight: 900; }
-    .receipt-divider { border-top: 1px dashed #6b7280; margin: 8px 0; }
+    .receipt-divider { border-top: 1px dashed #666; margin: 6px 0; }
     .receipt-row { display: flex; justify-content: space-between; }
-    .receipt-col-name { width: 44%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
-    .receipt-col-qty { width: 30%; text-align: center; }
-    .receipt-col-total { width: 26%; text-align: right; }
-
-    /* Daily Sales Table */
-    .sales-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-    .metric { background: rgba(255, 255, 255, 0.08); padding: 10px 4px; border-radius: 10px; text-align: center; }
-    .metric span { display: block; font-size: 0.85rem; color: #9ca3af; margin-bottom: 2px; }
-    .metric strong { font-size: 1.15rem; color: #ffffff; font-weight: 900; }
-    .table-container { background: rgba(255, 255, 255, 0.06); border-radius: 12px; overflow: hidden; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { padding: 8px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    th { background: rgba(255, 255, 255, 0.1); font-weight: 700; color: #e5e7eb; }
-    .btn-export { background: rgba(255,255,255,0.15); color: white; padding: 12px; border-radius: 10px; width: 100%; font-size: 0.95rem; font-weight: 800; margin-top: 12px; cursor: pointer; border: none; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1 id="display-shop-name">Sri Tiffin Center</h1>
-    <div class="token-badge">Next: #<span id="next-token-id">1</span></div>
+    <h1 id="disp-name">Sri Tiffin Center</h1>
+    <div class="token-badge">Next: #<span id="disp-token">1</span></div>
   </header>
 
-  <div class="status-strip">
-    <div class="status-pill" onclick="alert('POS stores all data safely in local storage.')">
-      <span class="status-dot" style="background:#22c55e;"></span>
-      <span>Storage: Active</span>
-    </div>
-    <div class="status-pill" onclick="connectPrinter()">
-      <span class="status-dot" id="printer-dot" style="background:#9ca3af;"></span>
-      <span id="printer-label">Printer: Connect</span>
-    </div>
-  </div>
-
   <div class="nav-tabs">
-    <button id="tab-billing" class="active" onclick="switchView('billing')">Order POS</button>
-    <button id="tab-sales" onclick="switchView('sales')">Daily Sales</button>
-    <button id="tab-manage" onclick="switchView('manage')">Manage Menu</button>
+    <button id="tb-bill" class="active" onclick="showTab('bill')">Order</button>
+    <button id="tb-set" onclick="showTab('set')">Settings</button>
   </div>
 
-  <!-- 1. POS VIEW: Hardcoded Static Elements (Guaranteed Visibility) -->
-  <div id="view-billing">
+  <!-- ORDER POS TAB -->
+  <div id="view-bill">
     <div class="menu-grid">
-      
-      <!-- Idli -->
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80" alt="Idli" />
-        <div class="card-body">
-          <h4>Idli (4)</h4>
-          <div class="price">₹40</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(1, -1)">-</button>
-            <span class="qty-number" id="qty-1">0</span>
-            <button class="btn-qty" onclick="changeQty(1, 1)">+</button>
-          </div>
+        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300" alt="Idli" />
+        <h4>Idli (4)</h4>
+        <div class="price">₹40</div>
+        <div class="controls">
+          <button class="btn-qty" onclick="adj(1, -1)">-</button>
+          <span class="qty-num" id="q-1">0</span>
+          <button class="btn-qty" onclick="adj(1, 1)">+</button>
         </div>
       </div>
-
-      <!-- Wada -->
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400&auto=format&fit=crop&q=80" alt="Wada" />
-        <div class="card-body">
-          <h4>Wada (2)</h4>
-          <div class="price">₹45</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(2, -1)">-</button>
-            <span class="qty-number" id="qty-2">0</span>
-            <button class="btn-qty" onclick="changeQty(2, 1)">+</button>
-          </div>
+        <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" alt="Wada" />
+        <h4>Wada (2)</h4>
+        <div class="price">₹45</div>
+        <div class="controls">
+          <button class="btn-qty" onclick="adj(2, -1)">-</button>
+          <span class="qty-num" id="q-2">0</span>
+          <button class="btn-qty" onclick="adj(2, 1)">+</button>
         </div>
       </div>
-
-      <!-- Masala Dosa -->
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" alt="Masala Dosa" />
-        <div class="card-body">
-          <h4>Masala Dosa</h4>
-          <div class="price">₹55</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(3, -1)">-</button>
-            <span class="qty-number" id="qty-3">0</span>
-            <button class="btn-qty" onclick="changeQty(3, 1)">+</button>
-          </div>
+        <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=300" alt="Masala Dosa" />
+        <h4>Masala Dosa</h4>
+        <div class="price">₹55</div>
+        <div class="controls">
+          <button class="btn-qty" onclick="adj(3, -1)">-</button>
+          <span class="qty-num" id="q-3">0</span>
+          <button class="btn-qty" onclick="adj(3, 1)">+</button>
         </div>
       </div>
-
-      <!-- Plain Dosa -->
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&auto=format&fit=crop&q=80" alt="Plain Dosa" />
-        <div class="card-body">
-          <h4>Plain Dosa</h4>
-          <div class="price">₹45</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(4, -1)">-</button>
-            <span class="qty-number" id="qty-4">0</span>
-            <button class="btn-qty" onclick="changeQty(4, 1)">+</button>
-          </div>
+        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300" alt="Poori" />
+        <h4>Poori (2)</h4>
+        <div class="price">₹50</div>
+        <div class="controls">
+          <button class="btn-qty" onclick="adj(4, -1)">-</button>
+          <span class="qty-num" id="q-4">0</span>
+          <button class="btn-qty" onclick="adj(4, 1)">+</button>
         </div>
       </div>
-
-      <!-- Poori -->
-      <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80" alt="Poori" />
-        <div class="card-body">
-          <h4>Poori (2)</h4>
-          <div class="price">₹50</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(5, -1)">-</button>
-            <span class="qty-number" id="qty-5">0</span>
-            <button class="btn-qty" onclick="changeQty(5, 1)">+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filter Coffee -->
-      <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80" alt="Filter Coffee" />
-        <div class="card-body">
-          <h4>Filter Coffee</h4>
-          <div class="price">₹20</div>
-          <div class="controls">
-            <button class="btn-qty" onclick="changeQty(6, -1)">-</button>
-            <span class="qty-number" id="qty-6">0</span>
-            <button class="btn-qty" onclick="changeQty(6, 1)">+</button>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <!-- Bottom Controls -->
     <div class="checkout-panel">
       <div class="total-row">
         <span>Total:</span>
-        <span>₹<span id="pos-total">0</span></span>
+        <span style="color:#4ade80;">₹<span id="disp-total">0</span></span>
       </div>
       <div class="actions">
-        <button class="btn-pay btn-preview" onclick="previewCurrentBill()">
-          👁️ Preview Bill
-        </button>
-        <button class="btn-pay btn-cash" onclick="generateToken('Cash')">
-          Cash Pay
-        </button>
-        <button class="btn-pay btn-upi" onclick="generateToken('UPI')">
-          UPI Pay
-        </button>
+        <button class="btn-pay btn-prev" onclick="openSlip('Preview')">Preview</button>
+        <button class="btn-pay btn-cash" onclick="openSlip('Cash')">Cash Pay</button>
+        <button class="btn-pay btn-upi" onclick="openSlip('UPI')">UPI Pay</button>
       </div>
     </div>
   </div>
 
-  <!-- 2. SALES VIEW -->
-  <div id="view-sales" style="display: none;">
-    <div class="sales-summary">
-      <div class="metric"><span>Tokens</span><strong id="stat-tokens">0</strong></div>
-      <div class="metric"><span>UPI (₹)</span><strong id="stat-upi">0</strong></div>
-      <div class="metric"><span>Total (₹)</span><strong id="stat-total">0</strong></div>
-    </div>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr><th>Token</th><th>Items</th><th>Pay</th><th>₹</th></tr>
-        </thead>
-        <tbody id="sales-rows"></tbody>
-      </table>
-    </div>
-
-    <button class="btn-export" onclick="exportToCSV()">Download Sales (CSV)</button>
-    <button class="btn-export" style="background: #b91c1c; margin-top:8px;" onclick="resetDay()">Reset Day Counter</button>
-  </div>
-
-  <!-- 3. MANAGE VIEW -->
-  <div id="view-manage" style="display: none;">
+  <!-- SETTINGS TAB -->
+  <div id="view-set" style="display:none;">
     <div class="section-card">
-      <h3>Shop & Print Details</h3>
+      <h3 style="margin-bottom:10px;">Shop & Bill Settings</h3>
       <div class="form-group">
-        <label>Shop / Center Name (POS removed):</label>
-        <input type="text" id="input-shop-name" placeholder="Sri Tiffin Center" />
-        
-        <label>Address Line:</label>
-        <input type="text" id="input-shop-address" placeholder="Main Road, Near Bus Stand" />
-        
-        <label>Mobile / Phone Number:</label>
-        <input type="text" id="input-shop-phone" placeholder="9876543210" />
-        
-        <button class="btn-action" style="margin-top: 6px;" onclick="saveShopDetails()">Save Shop Details</button>
+        <label>Shop Name:</label>
+        <input type="text" id="cfg-name" placeholder="Sri Tiffin Center" />
+        <label>Address:</label>
+        <input type="text" id="cfg-addr" placeholder="Main Road, Near Bus Stand" />
+        <label>Phone Number:</label>
+        <input type="text" id="cfg-phone" placeholder="9876543210" />
+        <button class="btn-save" onclick="saveCfg()">Save Settings</button>
       </div>
     </div>
   </div>
 
-  <!-- RECEIPT MODAL -->
-  <div id="token-modal" onclick="closeModal()">
-    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;" onclick="event.stopPropagation()">
-      <div class="receipt-paper" id="receipt-preview-content"></div>
-      <div style="display: flex; gap: 8px; margin-top: 6px;">
-        <button class="btn-pay btn-cash" style="padding: 12px;" onclick="reprintCurrentToken()">
-          🖨️ Print Slip
-        </button>
-        <button class="btn-pay" style="background: rgba(255,255,255,0.2); padding: 12px;" onclick="closeModal()">
-          Close
-        </button>
-      </div>
+  <!-- THERMAL RECEIPT PREVIEW MODAL -->
+  <div id="token-modal" onclick="closeSlip()">
+    <div style="display:flex; flex-direction:column; gap:10px; width:100%; max-width:300px;" onclick="event.stopPropagation()">
+      <div class="receipt-paper" id="slip-content"></div>
+      <button class="btn-pay" style="background:#dc2626;" onclick="closeSlip()">Close Preview</button>
     </div>
   </div>
 
   <script>
-    const ITEMS = {
+    const MENU = {
       1: { name: "Idli (4)", price: 40 },
       2: { name: "Wada (2)", price: 45 },
       3: { name: "Masala Dosa", price: 55 },
-      4: { name: "Plain Dosa", price: 45 },
-      5: { name: "Poori (2)", price: 50 },
-      6: { name: "Filter Coffee", price: 20 }
+      4: { name: "Poori (2)", price: 50 }
     };
 
-    let cart = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
-    let currentToken = parseInt(localStorage.getItem("shop_token") || "1", 10);
-    let localSales = JSON.parse(localStorage.getItem("shop_sales") || "[]");
-    let shopName = localStorage.getItem("shop_name") || "Sri Tiffin Center";
-    let shopAddress = localStorage.getItem("shop_address") || "Main Road, Near Bus Stand";
-    let shopPhone = localStorage.getItem("shop_phone") || "9876543210";
-    
-    let printCharacteristic = null;
-    let activeSlipRecord = null;
-    let activeSlipItems = null;
+    let cart = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    let token = parseInt(localStorage.getItem("app_token") || "1", 10);
+    let sName = localStorage.getItem("app_name") || "Sri Tiffin Center";
+    let sAddr = localStorage.getItem("app_addr") || "Main Road, Near Bus Stand";
+    let sPhone = localStorage.getItem("app_phone") || "9876543210";
 
-    document.getElementById("display-shop-name").innerText = shopName;
-    document.getElementById("input-shop-name").value = shopName;
-    document.getElementById("input-shop-address").value = shopAddress;
-    document.getElementById("input-shop-phone").value = shopPhone;
-    document.getElementById("next-token-id").innerText = currentToken;
+    document.getElementById("disp-name").innerText = sName;
+    document.getElementById("disp-token").innerText = token;
+    document.getElementById("cfg-name").value = sName;
+    document.getElementById("cfg-addr").value = sAddr;
+    document.getElementById("cfg-phone").value = sPhone;
 
-    function changeQty(id, delta) {
+    function adj(id, delta) {
       cart[id] = Math.max(0, (cart[id] || 0) + delta);
-      document.getElementById("qty-" + id).innerText = cart[id];
-      
-      let total = 0;
-      for (let i in cart) {
-        total += cart[i] * ITEMS[i].price;
-      }
-      document.getElementById("pos-total").innerText = total;
+      document.getElementById("q-" + id).innerText = cart[id];
+      let tot = 0;
+      for (let k in cart) tot += cart[k] * MENU[k].price;
+      document.getElementById("disp-total").innerText = tot;
     }
 
-    function saveShopDetails() {
-      const nameVal = document.getElementById("input-shop-name").value.trim();
-      const addrVal = document.getElementById("input-shop-address").value.trim();
-      const phoneVal = document.getElementById("input-shop-phone").value.trim();
-
-      if (!nameVal) return alert("Please enter a valid shop name.");
-
-      shopName = nameVal;
-      shopAddress = addrVal;
-      shopPhone = phoneVal;
-
-      localStorage.setItem("shop_name", shopName);
-      localStorage.setItem("shop_address", shopAddress);
-      localStorage.setItem("shop_phone", shopPhone);
-
-      document.getElementById("display-shop-name").innerText = shopName;
-      alert("Shop details updated successfully!");
+    function showTab(t) {
+      document.getElementById("view-bill").style.display = t === "bill" ? "block" : "none";
+      document.getElementById("view-set").style.display = t === "set" ? "block" : "none";
+      document.getElementById("tb-bill").className = t === "bill" ? "active" : "";
+      document.getElementById("tb-set").className = t === "set" ? "active" : "";
     }
 
-    function previewCurrentBill() {
-      let selected = [];
-      let total = 0;
-      for (let i in cart) {
-        if (cart[i] > 0) {
-          selected.push({
-            name: ITEMS[i].name,
-            qty: cart[i],
-            price: ITEMS[i].price,
-            subTotal: cart[i] * ITEMS[i].price
-          });
-          total += cart[i] * ITEMS[i].price;
+    function saveCfg() {
+      sName = document.getElementById("cfg-name").value.trim() || "Sri Tiffin Center";
+      sAddr = document.getElementById("cfg-addr").value.trim() || "";
+      sPhone = document.getElementById("cfg-phone").value.trim() || "";
+      localStorage.setItem("app_name", sName);
+      localStorage.setItem("app_addr", sAddr);
+      localStorage.setItem("app_phone", sPhone);
+      document.getElementById("disp-name").innerText = sName;
+      alert("Settings saved!");
+      showTab("bill");
+    }
+
+    function openSlip(mode) {
+      let items = [];
+      let tot = 0;
+      let qtyTot = 0;
+      for (let k in cart) {
+        if (cart[k] > 0) {
+          items.push({ name: MENU[k].name, qty: cart[k], price: MENU[k].price, sub: cart[k] * MENU[k].price });
+          tot += cart[k] * MENU[k].price;
+          qtyTot += cart[k];
         }
       }
 
-      if (!selected.length) {
+      if (!items.length) {
         alert("Please add at least 1 item first!");
         return;
       }
 
-      activeSlipRecord = {
-        token: currentToken,
-        date: new Date().toLocaleDateString('en-GB'),
-        mode: "Estimate / Preview",
-        total: total
-      };
-      activeSlipItems = selected;
-
-      renderReceiptPreview(activeSlipRecord, activeSlipItems);
-      document.getElementById("token-modal").style.display = "flex";
-    }
-
-    function generateToken(mode) {
-      let selected = [];
-      let total = 0;
-      let summaryList = [];
-
-      for (let i in cart) {
-        if (cart[i] > 0) {
-          selected.push({
-            name: ITEMS[i].name,
-            qty: cart[i],
-            price: ITEMS[i].price,
-            subTotal: cart[i] * ITEMS[i].price
-          });
-          summaryList.push(ITEMS[i].name + " x" + cart[i]);
-          total += cart[i] * ITEMS[i].price;
-        }
-      }
-
-      if (!selected.length) {
-        alert("Please select at least 1 item!");
-        return;
-      }
-
-      const record = {
-        token: currentToken,
-        date: new Date().toLocaleDateString('en-GB'),
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        items: summaryList.join(", "),
-        total: total,
-        mode: mode
-      };
-
-      localSales.push(record);
-      localStorage.setItem("shop_sales", JSON.stringify(localSales));
-
-      activeSlipRecord = record;
-      activeSlipItems = selected;
-
-      renderReceiptPreview(record, selected);
-      document.getElementById("token-modal").style.display = "flex";
-
-      if (printCharacteristic) {
-        printThermalSlip(record, selected);
-      }
-
-      currentToken++;
-      localStorage.setItem("shop_token", currentToken);
-      document.getElementById("next-token-id").innerText = currentToken;
-
-      for (let i in cart) {
-        cart[i] = 0;
-        document.getElementById("qty-" + i).innerText = "0";
-      }
-      document.getElementById("pos-total").innerText = "0";
-    }
-
-    function renderReceiptPreview(record, items) {
-      let totalQty = items.reduce((sum, item) => sum + item.qty, 0);
-
-      let itemsHtml = items.map(item => `
+      let rows = items.map(it => `
         <div class="receipt-row">
-          <span class="receipt-col-name">${item.name}</span>
-          <span class="receipt-col-qt
+          <span>${it.name}</span>
+          <span>${it.qty} / ₹${it.price}</span>
+          <span>₹${it.sub}</span>
+        </div>
+      `).join("");
+
+      document.getElementById("slip-content").innerHTML = `
+        <div class="receipt-center" style="font-size:1.1rem; font-weight:bold;">${sName}</div>
+        <div class="receipt-center" style="font-size:0.75rem; color:#555;">${sAddr}</div>
+        <div class="receipt-center" style="font-size:0.75rem; color:#555;">Phone: ${sPhone}</div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-row">
+          <span>Bill No: #${token}</span>
+          <span>Mode: ${mode}</span>
+        </div>
+        <div class="receipt-row">
+          <span>Date: ${new Date().toLocaleDateString('en-GB')}</span>
+          <span>Time: ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-row" style="font-weight:bold;">
+          <span>Item</span>
+          <span>Qty/Rate</span>
+          <span>Total</span>
+        </div>
+        <div class="receipt-divider"></div>
+        ${rows}
+        <div class="receipt-divider"></div>
+        <div class="receipt-row">
+          <span>Total Qty: ${qtyTot}</span>
+          <span>Sub Total: ₹${tot}</span>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-center" style="font-size:1.1rem; font-weight:bold; margin: 4px 0;">Grand Total: ₹${tot}</div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-center" style="font-size:0.75rem; margin-top:4px;">Thank You! Visit Again</div>
+      `;
+
+      document.getElementById("token-modal").style.display = "flex";
+
+      if (mode !== "Preview") {
+        token++;
+        localStorage.setItem("app_token", token);
+        document.getElementById("disp-token").innerText = token;
+        for (let k in cart) {
+          cart[k] = 0;
+          document.getElementById("q-" + k).innerText = "0";
+        }
+        document.getElementById("disp-total").innerText = "0";
+      }
+    }
+
+    function closeSlip() {
+      document.getElementById("token-modal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
