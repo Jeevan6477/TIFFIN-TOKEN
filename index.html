@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Sri Tiffin Center</title>
   <meta name="theme-color" content="#991b1b" />
+
+  <!-- Firebase Compat Libraries (Safe & Non-blocking) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
   <style>
-    * { box-sizing: border-box; font-family: sans-serif; margin: 0; padding: 0; }
+    * { box-sizing: border-box; font-family: sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { background: #140303; color: #fff; padding: 12px; padding-bottom: 140px; min-height: 100vh; }
     
     header { 
@@ -16,9 +21,32 @@
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
-      margin-bottom: 12px; 
+      margin-bottom: 10px; 
     }
     .token-badge { background: #fff; color: #991b1b; padding: 6px 12px; border-radius: 20px; font-weight: bold; }
+
+    /* Status Bar */
+    .status-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; }
+    .status-dot.live { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
     
     .nav-tabs { display: flex; gap: 6px; margin-bottom: 14px; }
     .nav-tabs button { 
@@ -30,6 +58,7 @@
       background: #333; 
       color: #fff; 
       border: none; 
+      cursor: pointer;
     }
     .nav-tabs button.active { background: #dc2626; }
     
@@ -40,19 +69,19 @@
     .card h4 { margin: 6px 0 2px; font-size: 1rem; }
     .card .price { color: #4ade80; font-weight: bold; margin-bottom: 8px; }
     .controls { display: flex; justify-content: center; align-items: center; gap: 10px; }
-    .btn-qty { width: 38px; height: 38px; background: #444; border: 1px solid #666; border-radius: 6px; color: #fff; font-size: 1.3rem; font-weight: bold; }
+    .btn-qty { width: 38px; height: 38px; background: #444; border: 1px solid #666; border-radius: 6px; color: #fff; font-size: 1.3rem; font-weight: bold; cursor: pointer; }
     .qty-num { font-size: 1.2rem; font-weight: bold; min-width: 20px; }
     
-    /* Footer Panel */
+    /* Bottom Panel */
     .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #000; padding: 12px 16px; border-top: 1px solid #333; z-index: 50; }
     .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
     .actions { display: flex; gap: 8px; }
-    .btn-pay { flex: 1; padding: 12px 4px; border: none; border-radius: 8px; font-weight: bold; color: #fff; font-size: 0.9rem; }
+    .btn-pay { flex: 1; padding: 12px 4px; border: none; border-radius: 8px; font-weight: bold; color: #fff; font-size: 0.9rem; cursor: pointer; }
     .btn-prev { background: #475569; }
     .btn-cash { background: #16a34a; }
     .btn-upi { background: #2563eb; }
     
-    /* Forms & Cards */
+    /* Settings & Forms */
     .section-card { background: #222; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
     .form-group { display: flex; flex-direction: column; gap: 8px; }
     .form-group label { font-size: 0.85rem; color: #bbb; }
@@ -62,7 +91,7 @@
     .item-manage-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; }
     .btn-del { background: #fee2e2; color: #991b1b; border: none; padding: 6px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
 
-    /* Daily Sales Table & Metrics */
+    /* Sales Table */
     .sales-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
     .metric-card { background: #222; border-radius: 10px; padding: 10px 4px; text-align: center; border: 1px solid #333; }
     .metric-card span { display: block; font-size: 0.75rem; color: #9ca3af; margin-bottom: 2px; }
@@ -76,7 +105,7 @@
     .btn-csv { background: #374151; color: #fff; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-bottom: 8px; }
     .btn-reset-day { background: #991b1b; color: #fff; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
 
-    /* Modal */
+    /* Thermal Modal */
     #token-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 16px; z-index: 999; }
     .receipt-paper { background: #fff; color: #111; width: 100%; max-width: 300px; padding: 16px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; line-height: 1.3; }
     .receipt-paper::after { content: ""; display: block; margin-top: 10px; border-bottom: 2px dashed #999; }
@@ -92,7 +121,19 @@
     <div class="token-badge">Next: #<span id="disp-token">1</span></div>
   </header>
 
-  <!-- 4 Main Tabs -->
+  <!-- Status Bar: Cloud & Printer -->
+  <div class="status-strip">
+    <div class="status-pill" onclick="checkCloud()">
+      <span class="status-dot" id="cloud-dot"></span>
+      <span id="cloud-label">Cloud: Initializing...</span>
+    </div>
+    <div class="status-pill" onclick="connectPrinter()">
+      <span class="status-dot" id="printer-dot"></span>
+      <span id="printer-label">Printer: Connect</span>
+    </div>
+  </div>
+
+  <!-- Main Tabs -->
   <div class="nav-tabs">
     <button id="tb-bill" class="active" onclick="showTab('bill')">Order POS</button>
     <button id="tb-sales" onclick="showTab('sales')">Daily Sales</button>
@@ -110,7 +151,7 @@
         <span style="color:#4ade80;">₹<span id="disp-total">0</span></span>
       </div>
       <div class="actions">
-        <button class="btn-pay btn-prev" onclick="openSlip('Preview')">Preview</button>
+        <button class="btn-pay btn-prev" onclick="openSlip('Preview')">👁️ Preview</button>
         <button class="btn-pay btn-cash" onclick="openSlip('Cash')">Cash Pay</button>
         <button class="btn-pay btn-upi" onclick="openSlip('UPI')">UPI Pay</button>
       </div>
@@ -163,7 +204,7 @@
         <label>Price (₹):</label>
         <input type="number" id="add-price" placeholder="45" />
         <label>Image URL (Optional):</label>
-        <input type="text" id="add-img" placeholder="Paste image web link or leave blank" />
+        <input type="text" id="add-img" placeholder="Paste image link or leave blank" />
         <button class="btn-save" onclick="addNewItem()">+ Add to Menu</button>
       </div>
     </div>
@@ -193,11 +234,15 @@
     </div>
   </div>
 
-  <!-- RECEIPT MODAL PREVIEW -->
+  <!-- RECEIPT MODAL PREVIEW & DIRECT PRINT -->
   <div id="token-modal" onclick="closeSlip()">
     <div style="display:flex; flex-direction:column; gap:10px; width:100%; max-width:300px;" onclick="event.stopPropagation()">
       <div class="receipt-paper" id="slip-content"></div>
-      <button class="btn-pay" style="background:#dc2626;" onclick="closeSlip()">Close Preview</button>
+      
+      <div style="display:flex; gap:8px;">
+        <button class="btn-pay" style="background:#16a34a;" onclick="reprintSlip()">🖨️ Print Slip</button>
+        <button class="btn-pay" style="background:#dc2626;" onclick="closeSlip()">Close</button>
+      </div>
     </div>
   </div>
 
@@ -217,13 +262,172 @@
     let sAddr = localStorage.getItem("app_addr") || "Main Road, Near Bus Stand";
     let sPhone = localStorage.getItem("app_phone") || "9876543210";
 
+    let db = null;
+    let printCharacteristic = null;
+    let activeSlipRecord = null;
+    let activeSlipItems = null;
+
     document.getElementById("disp-name").innerText = sName;
     document.getElementById("disp-token").innerText = token;
     document.getElementById("cfg-name").value = sName;
     document.getElementById("cfg-addr").value = sAddr;
     document.getElementById("cfg-phone").value = sPhone;
 
-    // Render POS Grid
+    // --- 1. FIREBASE SETUP ---
+    function initFirebase() {
+      try {
+        if (typeof firebase !== "undefined") {
+          const firebaseConfig = {
+            projectId: "tiffin-counter-3c051",
+            authDomain: "tiffin-counter-3c051.firebaseapp.com",
+            storageBucket: "tiffin-counter-3c051.appspot.com",
+            messagingSenderId: "1069700586665",
+            appId: "1:1069700586665:web:954406f0901aab22e71db8"
+          };
+
+          if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+          db = firebase.firestore();
+
+          document.getElementById("cloud-dot").classList.add("live");
+          document.getElementById("cloud-label").innerText = "Cloud: Live";
+
+          // Sync orders for today
+          const todayIso = new Date().toISOString().slice(0, 10);
+          db.collection("orders").onSnapshot(snap => {
+            let cloudOrders = [];
+            snap.forEach(doc => {
+              const d = doc.data();
+              if (d.isoDate === todayIso) cloudOrders.push(d);
+            });
+
+            if (cloudOrders.length > 0) {
+              salesHistory = cloudOrders.sort((a, b) => b.token - a.token);
+              localStorage.setItem("app_sales_records", JSON.stringify(salesHistory));
+              
+              const maxT = Math.max(...cloudOrders.map(o => o.token || 0));
+              if (maxT >= token) {
+                token = maxT + 1;
+                localStorage.setItem("app_token", token);
+                document.getElementById("disp-token").innerText = token;
+              }
+              renderSales();
+            }
+          }, err => {
+            console.warn("Firestore listener fallback:", err.message);
+            document.getElementById("cloud-label").innerText = "Cloud: Offline Storage";
+          });
+        }
+      } catch (e) {
+        document.getElementById("cloud-label").innerText = "Cloud: Offline Storage";
+      }
+    }
+
+    function checkCloud() {
+      if (db) alert("Cloud is active and syncing sales in real time!");
+      else alert("Running in offline local storage mode.");
+    }
+
+    // --- 2. BLUETOOTH THERMAL PRINTER SETUP ---
+    async function connectPrinter() {
+      if (!navigator.bluetooth) return alert("Web Bluetooth requires Google Chrome on Android.");
+      try {
+        const device = await navigator.bluetooth.requestDevice({
+          acceptAllDevices: true,
+          optionalServices: [
+            "000018f0-0000-1000-8000-00805f9b34fb",
+            "e7810a71-73ae-499d-8c15-faa9aef0c3f2",
+            "49535343-fe7d-4ae5-8fa9-9fafd205e455"
+          ]
+        });
+
+        const server = await device.gatt.connect();
+        const services = await server.getPrimaryServices();
+
+        for (const service of services) {
+          const characteristics = await service.getCharacteristics();
+          for (const char of characteristics) {
+            if (char.properties.write || char.properties.writeWithoutResponse) {
+              printCharacteristic = char;
+              break;
+            }
+          }
+          if (printCharacteristic) break;
+        }
+
+        if (printCharacteristic) {
+          document.getElementById("printer-dot").style.background = "#22c55e";
+          document.getElementById("printer-label").innerText = `Printer: Ready`;
+          alert("Printer paired successfully!");
+        }
+      } catch (err) {
+        alert("Printer connection error: " + err.message);
+      }
+    }
+
+    async function printThermalSlip(record, items) {
+      if (!printCharacteristic) return;
+      try {
+        const encoder = new TextEncoder();
+        const ESC = "\x1B";
+        const GS = "\x1D";
+
+        let receipt = ESC + "@"; 
+        receipt += ESC + "a" + "\x01"; // Center
+        receipt += ESC + "E" + "\x01"; // Bold ON
+        receipt += `${sName}\n`;
+        receipt += ESC + "E" + "\x00"; // Bold OFF
+        receipt += `${sAddr}\n`;
+        receipt += `Phone: ${sPhone}\n`;
+        receipt += "--------------------------------\n";
+
+        receipt += ESC + "a" + "\x00"; // Left
+        receipt += `Bill To: ${record.mode} Sale\n`;
+        const bLeft = `Bill No: #${record.token}`;
+        const bRight = `Date: ${record.date}`;
+        const bSpaces = Math.max(1, 32 - (bLeft.length + bRight.length));
+        receipt += bLeft + " ".repeat(bSpaces) + bRight + "\n";
+        receipt += "--------------------------------\n";
+        receipt += "Item Name       Qty/Rate   Total\n";
+        receipt += "--------------------------------\n";
+
+        let totalQty = 0;
+        items.forEach(it => {
+          totalQty += it.qty;
+          let name = it.name.length > 14 ? it.name.substring(0, 14) : it.name.padEnd(14, " ");
+          const col2 = `${it.qty}/${it.price}`.padEnd(10, " ");
+          const col3 = `${it.sub}`.padStart(8, " ");
+          receipt += name + col2 + col3 + "\n";
+        });
+
+        receipt += "--------------------------------\n";
+        const lSum = `Total Qty: ${totalQty}`;
+        const rSum = `Sub Total: ${record.total}`;
+        const sSpaces = Math.max(1, 32 - (lSum.length + rSum.length));
+        receipt += lSum + " ".repeat(sSpaces) + rSum + "\n";
+        receipt += "--------------------------------\n";
+
+        receipt += ESC + "a" + "\x01"; // Center
+        receipt += ESC + "E" + "\x01";
+        receipt += `Grand Total: Rs. ${record.total}\n`;
+        receipt += ESC + "E" + "\x00";
+        receipt += "--------------------------------\n";
+        receipt += "Thank You! Visit Again\n\n\n\n";
+        receipt += GS + "V" + "\x41" + "\x00"; // Cut
+
+        await printCharacteristic.writeValue(encoder.encode(receipt));
+      } catch (err) {
+        console.error("Thermal printing error:", err);
+      }
+    }
+
+    async function reprintSlip() {
+      if (!printCharacteristic) return alert("Please tap 'Printer: Connect' first!");
+      if (activeSlipRecord && activeSlipItems) {
+        await printThermalSlip(activeSlipRecord, activeSlipItems);
+      }
+    }
+
+    // --- 3. UI RENDERING & BILLING ---
     function renderPOS() {
       const container = document.getElementById("menu-cards-container");
       container.innerHTML = "";
@@ -246,11 +450,9 @@
       calcTotal();
     }
 
-    // Render Daily Sales Tab
     function renderSales() {
       const tbody = document.getElementById("sales-table-body");
       tbody.innerHTML = "";
-
       let totalRevenue = 0;
       let totalUpi = 0;
 
@@ -274,7 +476,6 @@
       document.getElementById("metric-revenue").innerText = "₹" + totalRevenue;
     }
 
-    // Render Manage Menu
     function renderManageList() {
       const container = document.getElementById("manage-list-container");
       container.innerHTML = "";
@@ -329,10 +530,7 @@
       const price = parseInt(document.getElementById("add-price").value, 10);
       const img = document.getElementById("add-img").value.trim();
 
-      if (!name || isNaN(price) || price <= 0) {
-        alert("Please enter a valid dish name and price.");
-        return;
-      }
+      if (!name || isNaN(price) || price <= 0) return alert("Enter valid dish name and price.");
 
       menu.push({
         id: Date.now(),
@@ -348,11 +546,11 @@
       
       renderManageList();
       renderPOS();
-      alert("Item added successfully!");
+      alert("Dish added!");
     }
 
     function deleteItem(id) {
-      if (confirm("Delete this item from the menu?")) {
+      if (confirm("Delete this item?")) {
         menu = menu.filter(m => m.id !== id);
         delete cart[id];
         localStorage.setItem("app_menu_list", JSON.stringify(menu));
@@ -400,14 +598,12 @@
         }
       });
 
-      if (!items.length) {
-        alert("Please add at least 1 item first!");
-        return;
-      }
+      if (!items.length) return alert("Please select at least 1 item!");
 
       const now = new Date();
       const dateStr = now.toLocaleDateString('en-GB');
       const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const isoDate = now.toISOString().slice(0, 10);
 
       let rows = items.map(it => `
         <div class="receipt-row">
@@ -449,21 +645,32 @@
         <div class="receipt-center" style="font-size:0.75rem; margin-top:4px;">Thank You! Visit Again</div>
       `;
 
+      activeSlipRecord = {
+        token: token,
+        isoDate: isoDate,
+        date: dateStr,
+        time: timeStr,
+        itemsSummary: summaryArr.join(", "),
+        mode: mode,
+        total: tot
+      };
+      activeSlipItems = items;
+
       document.getElementById("token-modal").style.display = "flex";
 
-      // Save to sales history on actual payment
       if (mode !== "Preview") {
-        const orderData = {
-          token: token,
-          date: dateStr,
-          time: timeStr,
-          itemsSummary: summaryArr.join(", "),
-          mode: mode,
-          total: tot
-        };
-
-        salesHistory.unshift(orderData);
+        salesHistory.unshift(activeSlipRecord);
         localStorage.setItem("app_sales_records", JSON.stringify(salesHistory));
+
+        // Auto print if Bluetooth connected
+        if (printCharacteristic) {
+          printThermalSlip(activeSlipRecord, items);
+        }
+
+        // Sync to cloud
+        if (db) {
+          db.collection("orders").add(activeSlipRecord).catch(e => console.warn("Cloud queued offline:", e));
+        }
 
         token++;
         localStorage.setItem("app_token", token);
@@ -478,12 +685,8 @@
       document.getElementById("token-modal").style.display = "none";
     }
 
-    // CSV Download
     function downloadSalesCSV() {
-      if (!salesHistory.length) {
-        alert("No sales recorded yet today!");
-        return;
-      }
+      if (!salesHistory.length) return alert("No sales recorded yet today!");
       let csv = "Token,Date,Time,Items,Payment Mode,Total Amount\n";
       salesHistory.forEach(s => {
         csv += `"${s.token}","${s.date}","${s.time}","${s.itemsSummary}","${s.mode}","${s.total}"\n`;
@@ -493,14 +696,13 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Sales_Report_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = `Sales_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    // Reset Day
     function resetDaySales() {
-      if (confirm("Reset token back to #1 and clear sales table for the day? Make sure you downloaded the CSV report first!")) {
+      if (confirm("Reset token counter to #1 for the new day? Make sure you downloaded the CSV report first!")) {
         salesHistory = [];
         token = 1;
         localStorage.removeItem("app_sales_records");
@@ -511,7 +713,9 @@
       }
     }
 
+    // Initialize App
     renderPOS();
+    initFirebase();
   </script>
 </body>
 </html>
